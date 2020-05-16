@@ -1,25 +1,54 @@
-// Les fonctions
-function isEven (n: number) : boolean {
-  return n % 2 === 0
-}
-
-console.log(isEven(2))
-console.log(isEven(3))
-
-function isEven2 (n: number | string) : boolean {
-  if (typeof n === 'string') {
-    return Number.parseInt(n) % 2 === 0
+// Les classes
+class Hero {
+  protected _type: string  
+  constructor () {
+    console.log('A new hero is born')
   }
-  return n % 2 === 0
+}
+class Warrior extends Hero {
+  private _name: string
+  public arme: string
+  constructor () {
+    super ()
+  }
+  getName (): string {
+    return this._name
+  }
+  setName (name: string): void {
+    this._name = name
+  }
+  getType (): string {
+    return this._type
+  }
+  setType (type: string): void {
+    this._type = type
+  }
 }
 
-console.log(isEven2(2))
-console.log(isEven2(3))
-console.log(isEven2("2"))
-console.log(isEven2("3"))
+let w: Warrior
+w = new Warrior()
+w.setName('Conan')
+w.setType('Warrior')
+w.arme = 'Epée'
+console.log(w.getName())
+console.log(w.getType())
+console.log(w.arme)
 
-function faitDesTrucs (a: number, options: { o1: string, o2: number, o3: boolean[]}) {
-    console.log('do')
-}
-
-faitDesTrucs(1,{o1:"se lever", o2:7, o3:[true, false]})
+class Warrior2 extends Hero {
+    private _name: string
+    constructor () {
+      super ()
+    }
+    get name (): string {
+      return this._name
+    }
+    set name (name: string) {
+      this._name = name
+    }
+  }
+  
+  let w2: Warrior2
+  w2 = new Warrior2()
+  w2.name = 'Conan'
+  console.log(w2.name)
+  
