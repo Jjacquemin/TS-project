@@ -1,6 +1,6 @@
-// Déclaration et any (anti pattern de typescript)
-let b: any = 5;
-b = "string";
-b = {c: 1, d: "test"};
-b = undefined;
-b = null;
+// Déclaration et decimal, hexa, octal, binaire
+let decimal: number = 6;
+let hex: number = 0x00d;
+let octal: number = 0o744;
+let binaire: number = 0b101010;
+
