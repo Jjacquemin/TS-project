@@ -1,3 +1,6 @@
 {
-  "files": ["main.ts", "index.ts"]
+  "files": ["main.ts", "index.ts"],
+  "compilerOptions": {
+    "target": "ES5"
+  }
 }

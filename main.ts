@@ -39,19 +39,37 @@ function feedAnimalList (animalList: Animal[]) {
   return animalList
 }
 
-const cat = new Cat()
-const kangaroo = new Kangaroo()
-const animal = new Animal()
-const fedAnimals: Animal[] = feedAnimalList([cat, kangaroo, animal])
-const fedCat: Cat = fedAnimals[0] as Cat
-fedCat.sleep()
+// Namespace
 
-// La généricité
+namespace Validator {
 
-function howManyElement<T> (elements: Array<T>) {
-  return elements.length
+  interface IStringValidator {
+    isValid:(s: string) => boolean
+  }
+
+  export class LetterOnlyValidator implements IStringValidator {
+    isValid (s:string) {
+      return !/\d/.test(s) // vérifie qu'il n'y a pas de chiffre dans la string
+    } 
+  }
 }
 
-console.log(howManyElement<number> ([1]))
-console.log(howManyElement<string> (['un','deux']))
-console.log(howManyElement<Animal> (fedAnimals))
+const letterValidator = new Validator.LetterOnlyValidator()
+
+console.log(letterValidator.isValid('231ZERZErezr'))
+console.log(letterValidator.isValid('fqfq231ZERZErezr'))
+console.log(letterValidator.isValid('ZERZErezr'))
+
+namespace Validator {
+    export class ZipCodeOnlyValidator implements IStringValidator {
+    isValid (s:string) {
+      return /\d{5}/.test(s) // vérifie qu'il n'y a pas de chiffre dans la string
+    } 
+  }
+}
+
+const zipCodeValidator = new Validator.ZipCodeOnlyValidator()
+
+console.log(zipCodeValidator.isValid('231ZE'))
+console.log(zipCodeValidator.isValid('59139'))
+
