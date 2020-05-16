@@ -1,30 +1,25 @@
-// Les énumérations
-enum Color {
-    red,
-    blue,
-    green
+// Les fonctions
+function isEven (n: number) : boolean {
+  return n % 2 === 0
 }
-console.log(Color.red);
-console.log(Color.blue);
-console.log(Color.green);
-console.log(Color[0]);
 
-enum Color2 {
-    red = 10,
-    blue,
-    green
-}
-console.log(Color2.red);
-console.log(Color2.blue);
-console.log(Color2.green);
-console.log(Color2[11]);
+console.log(isEven(2))
+console.log(isEven(3))
 
-enum Color3 {
-    red,
-    blue = 10,
-    green
+function isEven2 (n: number | string) : boolean {
+  if (typeof n === 'string') {
+    return Number.parseInt(n) % 2 === 0
+  }
+  return n % 2 === 0
 }
-console.log(Color3.red);
-console.log(Color3.blue);
-console.log(Color3.green);
-console.log(Color3[0]);
+
+console.log(isEven2(2))
+console.log(isEven2(3))
+console.log(isEven2("2"))
+console.log(isEven2("3"))
+
+function faitDesTrucs (a: number, options: { o1: string, o2: number, o3: boolean[]}) {
+    console.log('do')
+}
+
+faitDesTrucs(1,{o1:"se lever", o2:7, o3:[true, false]})
