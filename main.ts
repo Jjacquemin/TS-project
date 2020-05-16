@@ -1,10 +1,12 @@
-// Déclaration et never
-function infinitLoop(): never{
-    while(true){
+// Déclaration et object
 
-    }
+function create(o: object | null): void {
+
 }
 
-function error(): never{
-    throw new Error('blabla');
-}
+create({});
+// create(42);
+// create("");
+// create(true);
+create(undefined);
+create(null);
