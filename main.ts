@@ -1,6 +1,7 @@
 // Le casting
 class Animal {
   hasEaten: boolean = false
+  
   eat () {
     this.hasEaten = true
     console.log('Miam miam')
@@ -43,4 +44,12 @@ const fedAnimals: Animal[] = feedAnimalList([cat, kangaroo, animal])
 const fedCat: Cat = fedAnimals[0] as Cat
 fedCat.sleep()
 
+// La généricité
 
+function howManyElement<T> (elements: Array<T>) {
+  return elements.length
+}
+
+console.log(howManyElement<number> ([1]))
+console.log(howManyElement<string> (['un','deux']))
+console.log(howManyElement<Animal> (fedAnimals))
