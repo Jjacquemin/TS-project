@@ -1,6 +1,7 @@
 {
   "files": ["main.ts", "index.ts"],
   "compilerOptions": {
-    "target": "ES5"
+    "target": "ES5",
+    "experimentalDecorators": true
   }
 }

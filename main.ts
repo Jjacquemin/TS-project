@@ -1,75 +1,65 @@
-// Le casting
-class Animal {
-  hasEaten: boolean = false
-  
-  eat () {
-    this.hasEaten = true
-    console.log('Miam miam')
+// Les décorateurs
+@classLogger("")
+class UneClasse {
+  @propertyLogger
+  private _uneVariable: string
+  constructor(v: string) {
+    this._uneVariable = v
   }
-
-  sleep () {
-    console.log('Zzz zzz')
+  @methodLogger()
+  multiply (a: number, b: number) {
+    return a * b
   }
-}
-
-export default class Cat extends Animal implements CarnivoreActions {
-  sleep () {
-    console.log('Sleep 25h a day')
+  @methodLogger()
+  toPlural (words: string[]) {
+    return words.map((t: string)=>t+'s')
   }
-
-  kill () {
-    console.log('Kill like a cat')
-  }
-}
-
-class Kangaroo extends Animal {
-
-}
-
-export {Kangaroo as K}
-
-interface CarnivoreActions {
-  kill: () => void
-}
-
-function feedAnimalList (animalList: Animal[]) {
-  for (let a of animalList) {
-    a.eat()
-  }
-  return animalList
-}
-
-// Namespace
-
-namespace Validator {
-
-  interface IStringValidator {
-    isValid:(s: string) => boolean
-  }
-
-  export class LetterOnlyValidator implements IStringValidator {
-    isValid (s:string) {
-      return !/\d/.test(s) // vérifie qu'il n'y a pas de chiffre dans la string
-    } 
+  get uneVariable () {
+    return this._uneVariable
+  } 
+  set uneVariable (v: string) {
+    this._uneVariable = v
   }
 }
 
-const letterValidator = new Validator.LetterOnlyValidator()
-
-console.log(letterValidator.isValid('231ZERZErezr'))
-console.log(letterValidator.isValid('fqfq231ZERZErezr'))
-console.log(letterValidator.isValid('ZERZErezr'))
-
-namespace Validator {
-    export class ZipCodeOnlyValidator implements IStringValidator {
-    isValid (s:string) {
-      return /\d{5}/.test(s) // vérifie qu'il n'y a pas de chiffre dans la string
-    } 
+function classLogger (param: string) {
+  return function(classConstructor: Function) {
+    console.log(`classLogger() ${classConstructor}.`)
   }
 }
 
-const zipCodeValidator = new Validator.ZipCodeOnlyValidator()
+function methodLogger() {
+  return function(target: Object, methodName: string, propertyDescriptor: PropertyDescriptor): PropertyDescriptor {
+    const method: Function = propertyDescriptor.value
+    propertyDescriptor.value = function (...methodArguments: any[]) {
+      const result = method.apply(this, methodArguments)
 
-console.log(zipCodeValidator.isValid('231ZE'))
-console.log(zipCodeValidator.isValid('59139'))
+      console.log(`La fonction ${methodName} est appelée avec les paramètres ${methodArguments} et le résultat est ${result}.`)
+    }
+    return propertyDescriptor
+  }
+}
 
+function propertyLogger(target: Object, propertyName: string) {
+  let propertyValue = this[propertyName]
+  const getterWithLogger = () => {
+    console.log(`Get : ${propertyName} => ${propertyValue}.`)
+    return propertyValue
+  }
+  const setterWithLogger = (newVal) => {
+    console.log(`Set : ${propertyName} => ${newVal}.`)
+    propertyValue = newVal
+  }
+  Object.defineProperty(target, propertyName, {
+    get : getterWithLogger,
+    set : setterWithLogger,
+    enumerable : true,
+    configurable : true
+  })
+}
+
+const u = new UneClasse("test")
+u.multiply(2,3)
+u.toPlural(['boy','girl'])
+u.uneVariable
+u.uneVariable = 'Modif'
