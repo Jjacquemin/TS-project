@@ -12,7 +12,7 @@ class Animal {
   }
 }
 
-class Cat extends Animal implements CarnivoreActions {
+export default class Cat extends Animal implements CarnivoreActions {
   sleep () {
     console.log('Sleep 25h a day')
   }
@@ -25,6 +25,8 @@ class Cat extends Animal implements CarnivoreActions {
 class Kangaroo extends Animal {
 
 }
+
+export {Kangaroo as K}
 
 interface CarnivoreActions {
   kill: () => void
